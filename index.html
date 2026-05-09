@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mansa — Amsterdam HQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f3ef;--surface:#fff;--surface2:#f0ede8;--surface3:#e8e4de;
+  --border:rgba(0,0,0,0.09);--border2:rgba(0,0,0,0.16);
+  --text:#1a1814;--text2:#6b6760;--text3:#9c9890;
+  --green:#2d5a3d;--green-l:#e8f0ea;--green-m:#b8d4be;
+  --purple:#4a3f6b;--purple-l:#eceaf4;
+  --red:#8b2222;--red-l:#f5e8e8;
+  --amber:#7a5c1e;--amber-l:#f5f0e0;
+  --blue:#1e4a7a;--blue-l:#e8f0f8;
+  --sans:'DM Sans',sans-serif;--serif:'DM Serif Display',serif;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.5}
+
+header{background:var(--green);color:#fff;padding:1.1rem 1.75rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,0.18)}
+.avatar{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:17px;color:#fff;border:2px solid rgba(255,255,255,0.35);flex-shrink:0}
+header h1{font-family:var(--serif);font-size:19px;font-weight:400;letter-spacing:-0.01em}
+header p{font-size:12px;opacity:0.68;margin-top:1px}
+.hdr-right{margin-left:auto;display:flex;gap:7px}
+.btn-ghost{padding:6px 12px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.28);border-radius:7px;color:#fff;font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:background .15s;text-decoration:none}
+.btn-ghost:hover{background:rgba(255,255,255,0.25)}
+
+nav.tabs{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.04);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+.tab-btn{padding:12px 16px;font-family:var(--sans);font-size:13px;font-weight:500;background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;color:var(--text2);display:flex;align-items:center;gap:6px;transition:color .15s,border-color .15s;white-space:nowrap}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+.tc{background:var(--surface2);color:var(--text3);font-size:10px;padding:1px 6px;border-radius:10px;font-weight:500}
+.tab-btn.active .tc{background:var(--green-l);color:var(--green)}
+
+.container{max-width:900px;margin:0 auto;padding:1.75rem 1.5rem}
+.section{display:none}
+.section.active{display:block}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 14px}
+.stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.stat-val{font-size:22px;font-weight:300;font-family:var(--serif);color:var(--text)}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:1px}
+
+/* SITE GRIDS */
+.panel-green{background:var(--green-l);border:1px solid rgba(45,90,61,0.2);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.panel-blue{background:var(--blue-l);border:1px solid rgba(30,74,122,0.15);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.panel-title{font-size:13px;font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.panel-green .panel-title{color:var(--green)}
+.panel-blue .panel-title{color:var(--blue)}
+.site-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.site-card{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);font-size:12px;font-weight:500;text-align:center;transition:all .15s}
+.site-card:hover{box-shadow:0 2px 10px rgba(0,0,0,0.1);transform:translateY(-2px);border-color:var(--border2)}
+.site-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.site-sub{font-size:10px;color:var(--text3)}
+
+/* FORM */
+.form-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem}
+.form-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.form-toggle-title{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--text);display:flex;align-items:center;gap:8px}
+.form-arrow{font-size:16px;color:var(--text3);transition:transform .2s;display:flex;align-items:center}
+.form-arrow.open{transform:rotate(180deg)}
+.form-body{overflow:hidden;max-height:0;transition:max-height .35s ease}
+.form-body.open{max-height:1200px}
+.form-inner{padding-top:1.25rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.ff{display:flex;flex-direction:column;gap:4px}
+label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;font-weight:500}
+input,select,textarea{padding:9px 11px;border:1px solid var(--border2);border-radius:8px;font-family:var(--sans);font-size:14px;background:var(--surface);color:var(--text);transition:border-color .15s,box-shadow .15s;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(45,90,61,0.1)}
+textarea{min-height:80px;resize:vertical}
+.form-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+
+/* BUTTONS */
+.btn{padding:8px 15px;border-radius:8px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .15s;border:1px solid var(--border2);background:transparent;color:var(--text);text-decoration:none}
+.btn:hover{background:var(--surface2)}
+.btn-primary{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-primary:hover{background:#224a30}
+.btn-sm{padding:5px 11px;font-size:12px}
+.btn-xs{padding:3px 8px;font-size:11px;border-radius:6px}
+.btn-danger{color:var(--red);border-color:rgba(139,34,34,0.18)}
+.btn-danger:hover{background:var(--red-l)}
+.btn-blue{color:var(--blue);border-color:rgba(30,74,122,0.22);background:var(--blue-l)}
+.btn-blue:hover{background:#d0e4f4}
+
+/* FILTERS */
+.filter-bar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.filter-btn{padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:transparent;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.filter-btn:hover{background:var(--surface2)}
+.filter-btn.active{background:var(--green);color:#fff;border-color:var(--green)}
+.fsearch{padding:6px 12px;border:1px solid var(--border2);border-radius:20px;font-family:var(--sans);font-size:13px;background:var(--surface);color:var(--text);min-width:0;flex:1;max-width:220px}
+.fsearch:focus{outline:none;border-color:var(--green)}
+
+/* CRM CARDS */
+.crm-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:box-shadow .15s}
+.crm-card:hover{box-shadow:0 3px 16px rgba(0,0,0,0.08)}
+.crm-main{padding:1.1rem 1.25rem}
+.crm-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+.crm-title{font-weight:500;font-size:15px}
+.crm-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.crm-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.meta-item{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:3px}
+.crm-footer{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:9px 1.25rem;background:var(--surface2);border-top:1px solid var(--border)}
+.crm-timeline{border-top:1px solid var(--border);padding:10px 1.25rem;background:#fafaf8}
+.tl-head{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
+.tl-entry{display:flex;gap:9px;padding:5px 0;border-bottom:1px solid var(--border)}
+.tl-entry:last-child{border-bottom:none}
+.tl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.tl-text{font-size:12px;color:var(--text2);flex:1}
+.tl-date{font-size:10px;color:var(--text3);margin-top:1px}
+.note-row{display:flex;gap:6px;margin-top:8px}
+.note-row input{flex:1;font-size:12px;padding:6px 9px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
+.b-pending{background:var(--purple-l);color:var(--purple)}
+.b-confirmed{background:var(--green-l);color:var(--green)}
+.b-viewed{background:var(--surface2);color:var(--text2)}
+.b-interested{background:#e8f4e8;color:#1a6b1a}
+.b-rejected{background:var(--red-l);color:var(--red)}
+.b-applied{background:var(--amber-l);color:var(--amber)}
+.b-booked{background:var(--green-l);color:var(--green)}
+.b-checking{background:var(--amber-l);color:var(--amber)}
+.b-completed{background:var(--surface2);color:var(--text2)}
+.b-cancelled{background:var(--red-l);color:var(--red)}
+.pill-walk{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--green-l);color:var(--green);font-weight:500}
+.pill-bus{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--purple-l);color:var(--purple);font-weight:500}
+.pill-other{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--surface2);color:var(--text2);font-weight:500}
+
+/* MISC */
+.price-big{font-family:var(--serif);font-size:20px;color:var(--green)}
+.price-note{font-size:11px;color:var(--text3)}
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--text3)}
+.empty-icon{font-size:32px;display:block;margin-bottom:10px;opacity:0.45}
+.empty p{font-size:14px}
+.sec-sep{display:flex;align-items:center;gap:10px;margin:1.5rem 0 1rem}
+.sec-sep-label{font-size:12px;font-weight:500;color:var(--text3);white-space:nowrap}
+.sec-sep-line{flex:1;height:1px;background:var(--border)}
+.ai-box{background:linear-gradient(135deg,var(--green-l) 0%,var(--surface) 100%);border:1px solid rgba(45,90,61,0.2);border-radius:14px;padding:1.25rem 1.5rem;margin-top:1rem}
+.ai-box-title{font-size:13px;font-weight:500;color:var(--green);margin-bottom:6px}
+.ai-box p{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px}
+.ai-prompts{display:flex;flex-wrap:wrap;gap:7px}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:12px}
+.info-title{font-family:var(--serif);font-size:17px;font-weight:400;margin-bottom:12px}
+.hotel-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);gap:12px}
+.hotel-row:last-child{border-bottom:none;padding-bottom:0}
+.hname{font-weight:500;font-size:14px}
+.hsub{font-size:12px;color:var(--text2);margin-top:2px}
+.route-row{padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.route-row:last-child{border-bottom:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.link-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;background:var(--surface);border:1px solid var(--border2);border-radius:20px;font-size:12px;font-weight:500;color:var(--text);text-decoration:none;transition:all .15s}
+.link-chip:hover{background:var(--surface2);transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.07)}
+.chip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);border-radius:16px;padding:1.75rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative}
+.modal h2{font-family:var(--serif);font-size:20px;font-weight:400;margin-bottom:1rem}
+.modal-x{position:absolute;top:1rem;right:1rem;background:var(--surface2);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--text2)}
+.modal-x:hover{background:var(--surface3)}
+.prompt-box{background:var(--surface2);border-radius:10px;padding:13px 14px;font-size:13px;color:var(--text2);line-height:1.65;white-space:pre-wrap;word-break:break-word;margin-bottom:12px;max-height:300px;overflow-y:auto}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;transition:transform .3s ease;z-index:300;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:640px){
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+  .container{padding:1rem}
+  header{padding:1rem}
+  nav.tabs{padding:0 0.5rem}
+  .site-grid{grid-template-columns:repeat(2,1fr)}
+  .fsearch{max-width:none;width:100%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="avatar">M</div>
+  <div>
+    <h1>Mansa's Amsterdam HQ</h1>
+    <p>House search &amp; hotel stays — AMC Watergraafsmeer</p>
+  </div>
+  <div class="hdr-right">
+    <button class="btn-ghost" onclick="exportData()">⬇ Export</button>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" onclick="switchTab('viewings',this)">🏠 Viewings <span class="tc" id="tc-v">0</span></button>
+  <button class="tab-btn" onclick="switchTab('hotels',this)">🏨 Hotel Stays <span class="tc" id="tc-h">0</span></button>
+  <button class="tab-btn" onclick="switchTab('guide',this)">📍 AMC Guide</button>
+</nav>
+
+<!-- ══════════════════════════════════════
+     VIEWINGS TAB
+══════════════════════════════════════ -->
+<div id="tab-viewings" class="section active">
+<div class="container">
+
+  <div class="stats-row" id="v-stats"></div>
+
+  <!-- Rental sites -->
+  <div class="panel-green">
+    <div class="panel-title">🔍 Find properties — click to open in a new tab</div>
+    <div class="site-grid">
+      <a class="site-card" href="https://www.funda.nl/huur/amsterdam/watergraafsmeer/" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#e85c2b">F</div>Funda<span class="site-sub">Top NL site</span>
+      </a>
+      <a class="site-card" href="https://www.pararius.com/apartments/amsterdam/watergraafsmeer" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#0057a8">P</div>Pararius<span class="site-sub">English-friendly</span>
+      </a>
+      <a class="site-card" href="https://www.kamernet.nl/en/for-rent/apartments/amsterdam" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#5c35c9">K</div>Kamernet<span class="site-sub">Rooms &amp; apts</span>
+      </a>
+      <a class="site-card" href="https://www.housinganywhere.com/s/Amsterdam--Netherlands" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#ff6b35">H</div>HousingAnywhere<span class="site-sub">Expat-friendly</span>
+      </a>
+      <a class="site-card" href="https://www.spotahome.com/s/amsterdam" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#00b4aa">S</div>Spotahome<span class="site-sub">Virtual tours</span>
+      </a>
+      <a class="site-card" href="https://www.facebook.com/groups/expats.amsterdam.housing/" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#1877f2">fb</div>FB: Expats Housing<span class="site-sub">Facebook group</span>
+      </a>
+      <a class="site-card" href="https://www.facebook.com/groups/amsterdamrentals/" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#1877f2">fb</div>FB: AMS Rentals<span class="site-sub">Facebook group</span>
+      </a>
+      <a class="site-card" href="https://www.marktplaats.nl/l/huizen-en-kamers/huurwoningen/amsterdam/" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#f5a623;color:#000">M</div>Marktplaats<span class="site-sub">NL classifieds</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Add form -->
+  <div class="form-panel">
+    <div class="form-toggle" onclick="toggleForm('vf')">
+      <div class="form-toggle-title">➕ Add a viewing</div>
+      <span class="form-arrow open" id="vf-arrow">▾</span>
+    </div>
+    <div class="form-body open" id="vf-body">
+      <div class="form-inner">
+        <div class="g2">
+          <div class="ff"><label>Property address *</label><input id="v-addr" placeholder="e.g. Linnaeusstraat 42, Amsterdam"/></div>
+          <div class="ff"><label>Neighbourhood</label><input id="v-hood" placeholder="e.g. Watergraafsmeer, Oost"/></div>
+        </div>
+        <div class="g3">
+          <div class="ff"><label>Viewing date</label><input type="date" id="v-date"/></div>
+          <div class="ff"><label>Time</label><input type="time" id="v-time"/></div>
+          <div class="ff"><label>Asking rent (€/mo)</label><input type="number" id="v-price" placeholder="1850"/></div>
+        </div>
+        <div class="g3">
+          <div class="ff"><label>Agent / contact</label><input id="v-agent" placeholder="Name or agency"/></div>
+          <div class="ff"><label>Phone / email</label><input id="v-contact" placeholder="+31 6… or name@…"/></div>
+          <div class="ff">
+            <label>Commute to AMC</label>
+            <select id="v-dist">
+              <option value="">— select —</option>
+              <option>Walking (&lt;20 min)</option>
+              <option>1 bus direct</option>
+              <option>Metro + walk</option>
+              <option>Bike (&lt;25 min)</option>
+              <option>2+ transfers</option>
+            </select>
+          </div>
+        </div>
+        <div class="g3">
+          <div class="ff">
+            <label>Size</label>
+            <select id="v-beds">
+              <option value="">—</option>
+              <option>Studio</option>
+              <option>1 bed</option>
+              <option>2 bed</option>
+              <option>3+ bed</option>
+            </select>
+          </div>
+          <div class="ff"><label>Listing URL</label><input id="v-url" placeholder="https://funda.nl/…"/></div>
+          <div class="ff">
+            <label>Your rating</label>
+            <select id="v-rating">
+              <option value="">—</option>
+              <option value="5">★★★★★ Love it</option>
+              <option value="4">★★★★ Really like</option>
+              <option value="3">★★★ It's ok</option>
+              <option value="2">★★ Not great</option>
+              <option value="1">★ Pass</option>
+            </select>
+          </div>
+        </div>
+        <div class="ff" style="margin-bottom:12px"><label>Notes / first impression</label><textarea id="v-notes" placeholder="Space, light, noise, street feel, pros, cons, red flags…"></textarea></div>
+        <div class="form-actions">
+          <button class="btn btn-primary" onclick="addViewing()">Save viewing</button>
+          <button class="btn" onclick="clearVForm()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-bar">
+    <input class="fsearch" id="v-search" placeholder="🔍 Search address, area…" oninput="renderViewings()"/>
+    <button class="filter-btn active" onclick="setVF('all',this)">All</button>
+    <button class="filter-btn" onclick="setVF('Pending',this)">Pending</button>
+    <button class="filter-btn" onclick="setVF('Confirmed',this)">Confirmed</button>
+    <button class="filter-btn" onclick="setVF('Viewed',this)">Viewed</button>
+    <button class="filter-btn" onclick="setVF('Interested',this)">⭐ Interested</button>
+    <button class="filter-btn" onclick="setVF('Applied',this)">Applied</button>
+  </div>
+
+  <div id="v-list"></div>
+
+  <!-- Archived -->
+  <div class="sec-sep">
+    <div class="sec-sep-line"></div>
+    <button class="sec-sep-label btn btn-sm" style="border-radius:20px" onclick="toggleArchive()" id="archive-btn">📁 Show past / archived viewings</button>
+    <div class="sec-sep-line"></div>
+  </div>
+  <div id="v-archive" style="display:none"></div>
+
+  <div class="ai-box">
+    <div class="ai-box-title">✦ AI prompts — click to view &amp; copy for Claude.ai</div>
+    <p>Use these with Claude.ai or ChatGPT to compare viewings, draft emails, and navigate the Dutch rental market.</p>
+    <div class="ai-prompts" id="v-prompts"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     HOTELS TAB
+══════════════════════════════════════ -->
+<div id="tab-hotels" class="section">
+<div class="container">
+
+  <div class="stats-row" id="h-stats"></div>
+
+  <!-- Booking sites -->
+  <div class="panel-blue">
+    <div class="panel-title">🔗 Search &amp; book — AMC area pre-loaded where possible</div>
+    <div class="site-grid">
+      <a class="site-card" href="https://www.booking.com/searchresults.html?ss=Watergraafsmeer%2C+Amsterdam&nflt=di%3D3000&order=price&group_adults=1&no_rooms=1" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#003580">B.</div>Booking.com<span class="site-sub">Near AMC, by price</span>
+      </a>
+      <a class="site-card" href="https://www.hotels.nl/amsterdam/watergraafsmeer/" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#e8b400;color:#1a1814">H</div>Hotels.nl<span class="site-sub">Dutch rates</span>
+      </a>
+      <a class="site-card" href="https://www.expedia.com/Hotel-Search?destination=Amsterdam+Watergraafsmeer&adults=1" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#fbcc33;color:#1a1814">E</div>Expedia<span class="site-sub">Bundle deals</span>
+      </a>
+      <a class="site-card" href="https://www.airbnb.com/s/Watergraafsmeer--Amsterdam/homes?adults=1&room_types%5B%5D=Entire+home%2Fapt" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#ff5a5f">A</div>Airbnb<span class="site-sub">Entire apt, Oost</span>
+      </a>
+      <a class="site-card" href="https://www.spotahome.com/s/amsterdam?rooms=entire-flat&max_price=1000" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#00b4aa">S</div>Spotahome<span class="site-sub">Weekly stays</span>
+      </a>
+      <a class="site-card" href="https://www.hotelscombined.com/Hotels/Search?Location=Amsterdam+Watergraafsmeer" target="_blank" rel="noopener">
+        <div class="site-icon" style="background:#7c4dff">HC</div>HotelsCombined<span class="site-sub">Price compare</span>
+      </a>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <a class="btn btn-sm btn-blue" href="https://www.google.com/travel/hotels?q=hotels+near+AMC+Amsterdam+Watergraafsmeer&hl=en" target="_blank" rel="noopener">🔍 Google Hotels — near AMC</a>
+      <a class="btn btn-sm" href="https://www.trivago.nl/nl/srl/hotel?search=200-735" target="_blank" rel="noopener">Trivago compare</a>
+    </div>
+  </div>
+
+  <!-- Best options quick-book -->
+  <div class="info-card" style="margin-bottom:1.25rem">
+    <div class="info-title" style="font-size:15px">⭐ Best options near AMC</div>
+    <div class="hotel-row">
+      <div>
+        <div class="hname">Bastion Hotel Amsterdam Amstel <span class="pill-walk" style="margin-left:5px">walk to AMC</span></div>
+        <div class="hsub">Literally next door to AMC. Quiet, reliable. Best for long stays.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+        <span class="price-big">~€85<span class="price-note">/night</span></span>
+        <a class="btn btn-xs btn-primary" href="https://www.booking.com/hotel/nl/bastion-amsterdam-amstel.html" target="_blank" rel="noopener">Book →</a>
+      </div>
+    </div>
+    <div class="hotel-row">
+      <div>
+        <div class="hname">citizenM Amsterdam East <span class="pill-bus" style="margin-left:5px">Bus 40/65</span></div>
+        <div class="hsub">Wibautstraat. Stylish, great Wi-Fi. ~20 min to AMC.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+        <span class="price-big">~€115<span class="price-note">/night</span></span>
+        <a class="btn btn-xs btn-primary" href="https://www.booking.com/hotel/nl/citizenm-amsterdam-east.html" target="_blank" rel="noopener">Book →</a>
+      </div>
+    </div>
+    <div class="hotel-row">
+      <div>
+        <div class="hname">Hotel V Fizeaustraat <span class="pill-bus" style="margin-left:5px">Bus 65</span></div>
+        <div class="hsub">Amsterdam Oost. Relaxed, local feel. Good weekly value.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+        <span class="price-big">~€105<span class="price-note">/night</span></span>
+        <a class="btn btn-xs btn-primary" href="https://www.booking.com/hotel/nl/v-fizeaustraat.html" target="_blank" rel="noopener">Book →</a>
+      </div>
+    </div>
+    <div class="hotel-row">
+      <div>
+        <div class="hname">Short-stay apartment (Spotahome / Airbnb) <span class="pill-other" style="margin-left:5px">varies</span></div>
+        <div class="hsub">Oost / Watergraafsmeer. ~30–40% cheaper for weekly stays.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+        <span class="price-big">~€65<span class="price-note">/night eq.</span></span>
+        <a class="btn btn-xs" href="https://www.spotahome.com/s/amsterdam" target="_blank" rel="noopener">Search →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Log form -->
+  <div class="form-panel">
+    <div class="form-toggle" onclick="toggleForm('hf')">
+      <div class="form-toggle-title">➕ Log a hotel stay</div>
+      <span class="form-arrow open" id="hf-arrow">▾</span>
+    </div>
+    <div class="form-body open" id="hf-body">
+      <div class="form-inner">
+        <div class="g2">
+          <div class="ff"><label>Hotel / apartment name *</label><input id="h-name" placeholder="e.g. Bastion Hotel Amstel"/></div>
+          <div class="ff"><label>Area / address</label><input id="h-addr" placeholder="e.g. Meibergdreef, Amsterdam Oost"/></div>
+        </div>
+        <div class="g4">
+          <div class="ff"><label>Check-in (Sun)</label><input type="date" id="h-in"/></div>
+          <div class="ff"><label>Check-out (Thu)</label><input type="date" id="h-out"/></div>
+          <div class="ff"><label>Price / night (€)</label><input type="number" id="h-price" placeholder="120"/></div>
+          <div class="ff">
+            <label>Commute to AMC</label>
+            <select id="h-commute">
+              <option value="">—</option>
+              <option>Walking (&lt;20 min)</option>
+              <option>1 bus direct</option>
+              <option>Metro + walk</option>
+              <option>2+ transfers</option>
+            </select>
+          </div>
+        </div>
+        <div class="g3">
+          <div class="ff"><label>Booking ref</label><input id="h-ref" placeholder="e.g. BKG-12345"/></div>
+          <div class="ff">
+            <label>Booked via</label>
+            <select id="h-via">
+              <option value="">—</option>
+              <option>Booking.com</option>
+              <option>Direct / hotel</option>
+              <option>Airbnb</option>
+              <option>Spotahome</option>
+              <option>Expedia</option>
+              <option>Hotels.nl</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="ff">
+            <label>Status</label>
+            <select id="h-status">
+              <option>Checking availability</option>
+              <option>Booked</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+        </div>
+        <div class="ff" style="margin-bottom:12px"><label>Notes (room quality, breakfast, pros / cons)</label><textarea id="h-notes" placeholder="Quiet room, good shower, no breakfast, bike storage available…"></textarea></div>
+        <div class="form-actions">
+          <button class="btn btn-primary" onclick="addHotel()">Save stay</button>
+          <button class="btn" onclick="clearHForm()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-bar">
+    <input class="fsearch" id="h-search" placeholder="🔍 Search hotel…" oninput="renderHotels()"/>
+    <button class="filter-btn active" onclick="setHF('all',this)">All</button>
+    <button class="filter-btn" onclick="setHF('Checking availability',this)">Checking</button>
+    <button class="filter-btn" onclick="setHF('Booked',this)">Booked</button>
+    <button class="filter-btn" onclick="setHF('Completed',this)">Past stays</button>
+  </div>
+
+  <div id="h-list"></div>
+
+  <div class="ai-box">
+    <div class="ai-box-title">✦ AI prompts — click to view &amp; copy</div>
+    <p>Find deals, negotiate weekly rates, or plan the commute to AMC.</p>
+    <div class="ai-prompts" id="h-prompts"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     AMC GUIDE TAB
+══════════════════════════════════════ -->
+<div id="tab-guide" class="section">
+<div class="container">
+
+  <div class="info-card">
+    <div class="info-title">📍 AMC — Amsterdam UMC</div>
+    <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:12px">
+      <strong style="color:var(--text)">Meibergdreef 9, 1105 AZ Amsterdam Zuidoost.</strong>
+      South-east edge of the city, Watergraafsmeer / Duivendrecht area, near the A10 ring road and Holendrecht metro station.
+    </p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a class="btn btn-sm btn-primary" href="https://maps.google.com/?q=Amsterdam+UMC+Meibergdreef+9+Amsterdam" target="_blank" rel="noopener">📍 Google Maps</a>
+      <a class="btn btn-sm btn-blue" href="https://9292.nl/en" target="_blank" rel="noopener">🚌 9292 Journey planner</a>
+      <a class="btn btn-sm" href="https://www.gvb.nl/en" target="_blank" rel="noopener">GVB transit info</a>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:12px">
+    <div class="info-card" style="margin-bottom:0">
+      <div class="info-title" style="font-size:15px">🚶 Walkable neighbourhoods</div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:13px">
+        <div><strong>Watergraafsmeer</strong> <span class="pill-walk" style="font-size:10px">10–18 min</span><br><span style="color:var(--text2)">Quiet, green, residential. Best rental supply near AMC.</span></div>
+        <div><strong>Duivendrecht</strong> <span class="pill-walk" style="font-size:10px">~15 min</span><br><span style="color:var(--text2)">Closest to hospital. Very practical, low-key vibe.</span></div>
+        <div><strong>Amstel / Omval</strong> <span class="pill-walk" style="font-size:10px">20–25 min</span><br><span style="color:var(--text2)">Charming canal character. Slightly pricier.</span></div>
+        <div><strong>Amsterdam Oost</strong> <span class="pill-bus" style="font-size:10px">1 bus</span><br><span style="color:var(--text2)">Vibrant, diverse. Bus 40 or 65 straight to AMC.</span></div>
+      </div>
+    </div>
+    <div class="info-card" style="margin-bottom:0">
+      <div class="info-title" style="font-size:15px">🚌 Routes to AMC</div>
+      <div class="route-row"><strong>Bus 40</strong> — Centraal → Oost → AMC. ~35 min. <strong>Most direct from inner city.</strong></div>
+      <div class="route-row"><strong>Bus 65</strong> — Wibautstraat (Oost) south to AMC. ~20 min from Oost hotels.</div>
+      <div class="route-row"><strong>Metro 54</strong> — Gein line to Holendrecht, then Bus 40 or 15 min walk.</div>
+      <div class="route-row"><strong>Bike</strong> — from Oost 15–25 min on dedicated lanes. OV-fiets at stations.</div>
+      <div style="margin-top:10px">
+        <a class="btn btn-sm btn-blue" href="https://9292.nl/en/route/from/amsterdam-wibautstraat/to/amsterdam-meibergdreef" target="_blank" rel="noopener">Plan: Wibautstraat → AMC →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-title" style="font-size:15px">🔗 Useful links</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <a class="link-chip" href="https://www.funda.nl/huur/amsterdam/watergraafsmeer/" target="_blank" rel="noopener"><div class="chip-dot" style="background:#e85c2b"></div>Funda — Watergraafsmeer</a>
+      <a class="link-chip" href="https://www.pararius.com/apartments/amsterdam/watergraafsmeer" target="_blank" rel="noopener"><div class="chip-dot" style="background:#0057a8"></div>Pararius — Watergraafsmeer</a>
+      <a class="link-chip" href="https://www.booking.com/hotel/nl/bastion-amsterdam-amstel.html" target="_blank" rel="noopener"><div class="chip-dot" style="background:#003580"></div>Bastion Hotel Amstel</a>
+      <a class="link-chip" href="https://www.amsterdam.nl/en/civil-affairs/registration/" target="_blank" rel="noopener"><div class="chip-dot" style="background:#2d5a3d"></div>Amsterdam BRP registration</a>
+      <a class="link-chip" href="https://expatax.nl/housing-in-the-netherlands/" target="_blank" rel="noopener"><div class="chip-dot" style="background:#7c4dff"></div>Expat housing guide</a>
+      <a class="link-chip" href="https://www.amsterdamumc.org" target="_blank" rel="noopener"><div class="chip-dot" style="background:#2d5a3d"></div>Amsterdam UMC</a>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- PROMPT MODAL -->
+<div class="modal-bg" id="pm">
+  <div class="modal">
+    <button class="modal-x" onclick="document.getElementById('pm').classList.remove('open')">✕</button>
+    <h2 id="pm-title"></h2>
+    <div class="prompt-box" id="pm-body"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="copyPrompt()">Copy prompt</button>
+      <a class="btn btn-blue" href="https://claude.ai" target="_blank" rel="noopener">Open Claude.ai →</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ──────────────────────────
+let viewings = JSON.parse(localStorage.getItem('mansa_v5_viewings')||'[]');
+let hotels   = JSON.parse(localStorage.getItem('mansa_v5_hotels')||'[]');
+let vFilter  = 'all';
+let hFilter  = 'all';
+let archiveOpen = false;
+
+function save(){
+  localStorage.setItem('mansa_v5_viewings', JSON.stringify(viewings));
+  localStorage.setItem('mansa_v5_hotels',   JSON.stringify(hotels));
+}
+
+// ── HELPERS ───────────────────────
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+function toggleForm(id){
+  const b=document.getElementById(id+'-body');
+  const a=document.getElementById(id+'-arrow');
+  const o=b.classList.toggle('open');
+  if(a) a.classList.toggle('open',o);
+}
+function openPM(title,text){
+  document.getElementById('pm-title').textContent=title;
+  document.getElementById('pm-body').textContent=text;
+  document.getElementById('pm').classList.add('open');
+}
+function copyPrompt(){
+  const text=document.getElementById('pm-body').textContent;
+  navigator.clipboard&&navigator.clipboard.writeText(text).then(()=>toast('Copied!')).catch(fallback);
+  function fallback(){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copied!');}
+}
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
+
+function now(){return new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}
+function today(){return new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}
+
+function statusBadge(s){
+  const m={Pending:'b-pending',Confirmed:'b-confirmed',Viewed:'b-viewed',Interested:'b-interested',Rejected:'b-rejected',Applied:'b-applied',Booked:'b-booked','Checking availability':'b-checking',Completed:'b-completed',Cancelled:'b-cancelled'};
+  return `<span class="badge ${m[s]||'b-pending'}">${s}</span>`;
+}
+function commutePill(c){
+  if(!c)return'';
+  const lc=c.toLowerCase();
+  const cls=lc.includes('walk')?'pill-walk':(lc.includes('bus')||lc.includes('metro')||lc.includes('bike'))?'pill-bus':'pill-other';
+  return `<span class="${cls}">${c}</span>`;
+}
+function stars(n){if(!n)return'';const i=+n;return'★'.repeat(i)+'☆'.repeat(5-i);}
+function ratingCol(n){return['','#c0392b','#e67e22','#d4ac0d','#27ae60','#16a085'][+n]||'#999';}
+function updateCounts(){
+  document.getElementById('tc-v').textContent=viewings.filter(v=>!v.archived&&v.status!=='Rejected').length;
+  document.getElementById('tc-h').textContent=hotels.filter(h=>h.status==='Booked').length;
+}
+
+// ── TABS ──────────────────────────
+function switchTab(name,el){
+  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='viewings')renderViewings();
+  if(name==='hotels')renderHotels();
+}
+
+// ── VIEWINGS ──────────────────────
+function setVF(f,el){
+  vFilter=f;
+  document.querySelectorAll('#tab-viewings .filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderViewings();
+}
+
+function renderViewings(){
+  const q=(document.getElementById('v-search').value||'').toLowerCase();
+  const active=viewings.filter((v,i)=>{
+    if(v.archived||v.status==='Rejected')return false;
+    if(vFilter!=='all'&&v.status!==vFilter)return false;
+    if(q&&!JSON.stringify(v).toLowerCase().includes(q))return false;
+    return true;
+  });
+  const archived=viewings.filter(v=>v.archived||v.status==='Rejected');
+
+  // stats
+  const total=viewings.length;
+  const viewed=viewings.filter(v=>['Viewed','Interested','Applied','Rejected'].includes(v.status)).length;
+  const interested=viewings.filter(v=>v.status==='Interested'||v.status==='Applied').length;
+  const priced=viewings.filter(v=>v.price);
+  const avg=priced.length?Math.round(priced.reduce((a,b)=>a+(+b.price),0)/priced.length):0;
+  document.getElementById('v-stats').innerHTML=`
+    <div class="stat"><div class="stat-label">Saved</div><div class="stat-val">${total}</div><div class="stat-sub">properties</div></div>
+    <div class="stat"><div class="stat-label">Viewed</div><div class="stat-val">${viewed}</div><div class="stat-sub">viewings done</div></div>
+    <div class="stat"><div class="stat-label">Interested</div><div class="stat-val">${interested}</div><div class="stat-sub">shortlisted</div></div>
+    <div class="stat"><div class="stat-label">Avg asking</div><div class="stat-val">${avg?'€'+avg:'—'}</div><div class="stat-sub">per month</div></div>`;
+
+  // active cards
+  const el=document.getElementById('v-list');
+  if(!active.length){
+    el.innerHTML=`<div class="empty"><span class="empty-icon">🏠</span><p>${viewings.length?'No viewings match this filter':'Add your first property above'}</p></div>`;
+  } else {
+    el.innerHTML=active.map(v=>{
+      const i=viewings.indexOf(v);
+      const tl=v.timeline||[];
+      return `
+      <div class="crm-card">
+        <div class="crm-main">
+          <div class="crm-header">
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+                <button style="background:none;border:none;cursor:pointer;font-size:19px;line-height:1;padding:0;transition:transform .15s" onclick="toggleStar(${i})" title="Star">${v.starred?'⭐':'☆'}</button>
+                <span class="crm-title">${v.address}</span>
+                ${v.url?`<a href="${v.url}" target="_blank" rel="noopener" style="font-size:11px;color:var(--blue);text-decoration:none;white-space:nowrap">🔗 listing</a>`:''}
+              </div>
+              <div class="crm-sub">${[v.hood,v.beds].filter(Boolean).join(' · ')}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0">
+              ${v.price?`<div style="font-family:var(--serif);font-size:20px;color:var(--green)">€${v.price}<span style="font-size:11px;font-family:var(--sans);color:var(--text3)">/mo</span></div>`:''}
+              ${statusBadge(v.status)}
+            </div>
+          </div>
+          <div class="crm-meta">
+            ${v.dist?commutePill(v.dist):''}
+            ${v.date?`<span class="meta-item">📅 ${v.date}${v.time?' at '+v.time:''}</span>`:''}
+            ${v.agent?`<span class="meta-item">👤 ${v.agent}${v.contact?' · <a href="mailto:${v.contact}" style="color:var(--blue)">${v.contact}</a>':''}</span>`:''}
+            ${v.rating?`<span class="meta-item" style="color:${ratingCol(v.rating)}">${stars(v.rating)}</span>`:''}
+          </div>
+          ${v.notes?`<p style="font-size:13px;color:var(--text2);line-height:1.55;padding:9px 12px;background:var(--surface2);border-radius:8px;margin-bottom:6px">${v.notes}</p>`:''}
+        </div>
+        <div class="crm-footer">
+          <select onchange="updateVStatus(${i},this.value)" style="width:auto;padding:5px 9px;font-size:12px;border-radius:6px;border:1px solid var(--border2)">
+            ${['Pending','Confirmed','Viewed','Interested','Applied','Rejected'].map(s=>`<option ${v.status===s?'selected':''}>${s}</option>`).join('')}
+          </select>
+          ${v.url?`<a class="btn btn-sm btn-blue" href="${v.url}" target="_blank" rel="noopener">🔗 Listing</a>`:''}
+          ${v.contact&&v.contact.includes('@')?`<a class="btn btn-sm" href="mailto:${v.contact}?subject=Viewing enquiry — ${encodeURIComponent(v.address)}">✉ Email</a>`:''}
+          ${v.contact&&!v.contact.includes('@')&&v.contact.length>5?`<a class="btn btn-sm" href="tel:${v.contact}">📞 Call</a>`:''}
+          <button class="btn btn-sm" onclick="openPM('Draft email — ${v.address.replace(/'/g,'\\\'').replace(/"/g,'&quot;')}',${JSON.stringify('Draft a professional email to the letting agent for the property at '+v.address+', Amsterdam.\n\nI am Dr. [your name], a physician at Amsterdam UMC (AMC site).\n\nPlease:\n- Confirm/follow up on a viewing appointment\n- Express genuine interest in the property\n- Mention I have proof of income as a doctor and can provide an employer reference\n- Ask about: lease start date, lease length, deposit amount, whether bikes can be stored securely\n\nKeep it warm, professional, and concise. Write in English, then add a Dutch version below.')})">Draft email</button>
+          <button class="btn btn-sm" onclick="archiveViewing(${i})">Archive</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteViewing(${i})">✕</button>
+        </div>
+        <div class="crm-timeline">
+          <div class="tl-head">Activity log</div>
+          ${tl.length?tl.slice().reverse().map(t=>`
+            <div class="tl-entry">
+              <div class="tl-dot" style="background:${t.color||'var(--green)'}"></div>
+              <div><div class="tl-text">${t.text}</div><div class="tl-date">${t.date}</div></div>
+            </div>`).join(''):'<div style="font-size:12px;color:var(--text3);padding:2px 0">No activity yet — add a note below</div>'}
+          <div class="note-row">
+            <input id="ni-${i}" placeholder="Add note, update, or reminder…" onkeydown="if(event.key==='Enter')addNote(${i})"/>
+            <button class="btn btn-sm btn-primary" onclick="addNote(${i})">Add</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // archive
+  const arc=document.getElementById('v-archive');
+  if(!archived.length){
+    arc.innerHTML='<div class="empty" style="padding:1.5rem"><p>No archived viewings</p></div>';
+  } else {
+    arc.innerHTML=archived.map(v=>{
+      const i=viewings.indexOf(v);
+      return `
+      <div class="crm-card" style="opacity:0.8">
+        <div class="crm-main">
+          <div class="crm-header">
+            <div><div class="crm-title">${v.address}</div><div class="crm-sub">${[v.hood,v.date].filter(Boolean).join(' · ')}</div></div>
+            <div style="display:flex;gap:6px;align-items:center">${v.price?`<span style="font-size:13px;color:var(--text2)">€${v.price}/mo</span>`:''}${statusBadge(v.status)}</div>
+          </div>
+          ${v.rating?`<div style="color:${ratingCol(v.rating)};font-size:13px;margin-bottom:4px">${stars(v.rating)}</div>`:''}
+          ${v.notes?`<p style="font-size:12px;color:var(--text3)">${v.notes}</p>`:''}
+        </div>
+        <div class="crm-footer">
+          <button class="btn btn-sm" onclick="restoreViewing(${i})">↩ Restore</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteViewing(${i})">✕ Delete</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  updateCounts();
+}
+
+function addViewing(){
+  const addr=document.getElementById('v-addr').value.trim();
+  if(!addr){toast('Please enter an address ⚠️');return;}
+  const v={
+    address:addr,
+    hood:document.getElementById('v-hood').value.trim(),
+    date:document.getElementById('v-date').value,
+    time:document.getElementById('v-time').value,
+    price:document.getElementById('v-price').value,
+    agent:document.getElementById('v-agent').value.trim(),
+    contact:document.getElementById('v-contact').value.trim(),
+    dist:document.getElementById('v-dist').value,
+    beds:document.getElementById('v-beds').value,
+    url:document.getElementById('v-url').value.trim(),
+    rating:document.getElementById('v-rating').value,
+    notes:document.getElementById('v-notes').value.trim(),
+    status:'Pending',starred:false,archived:false,
+    created:today(),
+    timeline:[{text:'Property added',date:now(),color:'var(--green)'}]
+  };
+  viewings.unshift(v);save();renderViewings();clearVForm();
+  toast('Viewing saved ✓');
+}
+
+function clearVForm(){
+  ['v-addr','v-hood','v-date','v-time','v-price','v-agent','v-contact','v-url','v-notes'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  ['v-dist','v-beds','v-rating'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+}
+
+function updateVStatus(i,s){
+  viewings[i].status=s;
+  if(!viewings[i].timeline)viewings[i].timeline=[];
+  const cols={Interested:'#27ae60',Rejected:'#c0392b',Applied:'#e67e22',Confirmed:'var(--green)'};
+  viewings[i].timeline.push({text:'Status → '+s,date:now(),color:cols[s]||'var(--purple)'});
+  save();renderViewings();
+}
+
+function addNote(i){
+  const el=document.getElementById('ni-'+i);
+  if(!el||!el.value.trim())return;
+  if(!viewings[i].timeline)viewings[i].timeline=[];
+  viewings[i].timeline.push({text:el.value.trim(),date:now(),color:'var(--blue)'});
+  save();renderViewings();toast('Note added ✓');
+}
+
+function toggleStar(i){viewings[i].starred=!viewings[i].starred;save();renderViewings();}
+function archiveViewing(i){
+  viewings[i].archived=true;
+  if(!viewings[i].timeline)viewings[i].timeline=[];
+  viewings[i].timeline.push({text:'Archived',date:now(),color:'#aaa'});
+  save();renderViewings();toast('Archived');
+}
+function restoreViewing(i){viewings[i].archived=false;viewings[i].status='Pending';save();renderViewings();toast('Restored ✓');}
+function deleteViewing(i){if(confirm('Permanently delete?')){viewings.splice(i,1);save();renderViewings();toast('Deleted');}}
+
+function toggleArchive(){
+  archiveOpen=!archiveOpen;
+  document.getElementById('v-archive').style.display=archiveOpen?'block':'none';
+  document.getElementById('archive-btn').textContent=archiveOpen?'📁 Hide archived viewings':'📁 Show past / archived viewings';
+}
+
+// ── HOTELS ────────────────────────
+function setHF(f,el){
+  hFilter=f;
+  document.querySelectorAll('#tab-hotels .filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderHotels();
+}
+
+function renderHotels(){
+  const q=(document.getElementById('h-search').value||'').toLowerCase();
+  const list=hotels.filter(h=>{
+    if(hFilter!=='all'&&h.status!==hFilter)return false;
+    if(q&&!JSON.stringify(h).toLowerCase().includes(q))return false;
+    return true;
+  });
+
+  const total=hotels.length;
+  const booked=hotels.filter(h=>h.status==='Booked').length;
+  const nights=hotels.reduce((a,h)=>{const d=Math.round((new Date(h.checkout)-new Date(h.checkin))/86400000);return a+(isNaN(d)||d<0?0:d);},0);
+  const spent=hotels.filter(h=>h.price&&h.checkin&&h.checkout).reduce((a,h)=>{const d=Math.round((new Date(h.checkout)-new Date(h.checkin))/86400000);return a+((isNaN(d)||d<0?0:d)*(+h.price));},0);
+
+  document.getElementById('h-stats').innerHTML=`
+    <div class="stat"><div class="stat-label">Total stays</div><div class="stat-val">${total}</div></div>
+    <div class="stat"><div class="stat-label">Booked</div><div class="stat-val">${booked}</div></div>
+    <div class="stat"><div class="stat-label">Nights logged</div><div class="stat-val">${nights}</div></div>
+    <div class="stat"><div class="stat-label">Total spent</div><div class="stat-val">${spent?'€'+Math.round(spent):'—'}</div></div>`;
+
+  const el=document.getElementById('h-list');
+  if(!list.length){
+    el.innerHTML=`<div class="empty"><span class="empty-icon">🏨</span><p>${hotels.length?'No stays match this filter':'Log your first hotel stay above'}</p></div>`;
+  } else {
+    el.innerHTML=list.map(h=>{
+      const i=hotels.indexOf(h);
+      const n=h.checkin&&h.checkout?Math.round((new Date(h.checkout)-new Date(h.checkin))/86400000):null;
+      const tot=n&&h.price?'€'+Math.round(n*(+h.price))+' total':'';
+      return `
+      <div class="crm-card">
+        <div class="crm-main">
+          <div class="crm-header">
+            <div>
+              <div class="crm-title">${h.name}</div>
+              <div class="crm-sub">${[h.addr,h.via?'via '+h.via:''].filter(Boolean).join(' · ')}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+              ${h.price?`<div><span class="price-big">€${h.price}</span> <span class="price-note">/night${tot?' · '+tot:''}</span></div>`:''}
+              ${statusBadge(h.status)}
+            </div>
+          </div>
+          <div class="crm-meta">
+            ${h.commute?commutePill(h.commute):''}
+            ${h.checkin?`<span class="meta-item">📅 ${h.checkin} → ${h.checkout||'?'}${n?' ('+n+' nights)':''}</span>`:''}
+            ${h.ref?`<span class="meta-item">🔖 ${h.ref}</span>`:''}
+          </div>
+          ${h.notes?`<p style="font-size:13px;color:var(--text2);line-height:1.55;padding:9px 12px;background:var(--surface2);border-radius:8px">${h.notes}</p>`:''}
+        </div>
+        <div class="crm-footer">
+          <select onchange="updateHStatus(${i},this.value)" style="width:auto;padding:5px 9px;font-size:12px;border-radius:6px;border:1px solid var(--border2)">
+            ${['Checking availability','Booked','Completed','Cancelled'].map(s=>`<option ${h.status===s?'selected':''}>${s}</option>`).join('')}
+          </select>
+          <a class="btn btn-sm btn-blue" href="https://www.booking.com/search.html?ss=${encodeURIComponent(h.name+' Amsterdam')}&order=price" target="_blank" rel="noopener">Booking.com →</a>
+          <a class="btn btn-sm" href="https://www.google.com/search?q=${encodeURIComponent(h.name+' Amsterdam book cheapest')}" target="_blank" rel="noopener">🔍 Google</a>
+          <button class="btn btn-sm btn-danger" onclick="deleteHotel(${i})">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  updateCounts();
+}
+
+function addHotel(){
+  const name=document.getElementById('h-name').value.trim();
+  if(!name){toast('Please enter a hotel name ⚠️');return;}
+  const h={
+    name,addr:document.getElementById('h-addr').value.trim(),
+    checkin:document.getElementById('h-in').value,
+    checkout:document.getElementById('h-out').value,
+    price:document.getElementById('h-price').value,
+    commute:document.getElementById('h-commute').value,
+    ref:document.getElementById('h-ref').value.trim(),
+    via:document.getElementById('h-via').value,
+    status:document.getElementById('h-status').value,
+    notes:document.getElementById('h-notes').value.trim(),
+    created:today()
+  };
+  hotels.unshift(h);save();renderHotels();clearHForm();
+  toast('Stay saved ✓');
+}
+
+function clearHForm(){
+  ['h-name','h-addr','h-in','h-out','h-price','h-ref','h-notes'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  ['h-commute','h-via'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('h-status').value='Checking availability';
+}
+
+function updateHStatus(i,s){hotels[i].status=s;save();renderHotels();}
+function deleteHotel(i){if(confirm('Delete this stay?')){hotels.splice(i,1);save();renderHotels();toast('Deleted');}}
+
+// ── PROMPTS ───────────────────────
+const VP=[
+  {l:'Compare my viewings',t:'I am a doctor at AMC Amsterdam (Meibergdreef 9). Compare these house viewings and rank them by: 1) commute time to AMC (walking preferred, max 1 direct bus), 2) value for money, 3) neighbourhood quality for a busy professional.\n\nMy viewings:\n[paste addresses and rents here, or describe them]'},
+  {l:'Draft agent email (EN + NL)',t:'Draft a professional email to a Dutch letting agent to confirm/follow up on a house viewing.\n\nProperty: [address]\nViewing: [date & time]\nI am: Dr. [name], physician at Amsterdam UMC (AMC)\n\nInclude: proof of income available, employer reference available, flexible on start date\nAsk: confirmation, parking, lease length, deposit amount\n\nWrite in English first, then add a Dutch translation below.'},
+  {l:'Best rental areas near AMC',t:'What are the 5 best Amsterdam neighbourhoods to rent a 1-bedroom flat as a doctor at AMC (Meibergdreef 9)?\n\nFor each give: walking/bus time to AMC, average monthly rent for a 1-bed, character, pros and cons for a busy professional on long shifts.'},
+  {l:'Viewing checklist',t:'Give me a comprehensive house viewing checklist for Amsterdam rentals. I am a doctor with long shifts and need: good insulation, reliable heating, secure bike storage, fast internet.\n\nCover: physical checks (damp, windows, boiler age, noise), 10 questions to ask the agent (lease, deposit, service charges, pets, subletting), and red flags to watch out for.'},
+  {l:'Expat renting guide NL',t:'Explain the Amsterdam rental process step by step for an expat doctor. Cover: best websites (Funda, Pararius, Kamernet, HousingAnywhere), how to write a strong application, documents needed (income proof, employer letter, ID, BSN), typical deposit, tenant rights in the Netherlands, and the top 5 scams to avoid.'},
+  {l:'Negotiate rent',t:'I am about to make an offer on a rental at [address], Amsterdam, asking €[amount]/month. How should I negotiate? What is reasonable to ask for — lower rent, longer notice period, included furniture? Draft the negotiation message to the agent in Dutch and English.'},
+];
+const HP=[
+  {l:'Find hotels near AMC',t:'Find budget hotels in Amsterdam near AMC hospital (Meibergdreef 9, Watergraafsmeer).\n\nRequirements:\n- Sunday check-in, Thursday check-out (4 nights)\n- Under €130/night\n- Walking distance or 1 direct bus to AMC\n\nList: name, area, commute to AMC, approx nightly rate, pros and cons.'},
+  {l:'Negotiate weekly rate',t:'I am a doctor working at AMC Amsterdam, staying Sunday–Thursday every week for 6–10 weeks while flat-hunting. Draft an email to a hotel to negotiate a discounted weekly rate.\n\nMention: I can prepay multiple weeks, flexible on room type, prefer a fixed room rather than different rooms each week.'},
+  {l:'Hotel vs apartment',t:'I need to stay near AMC Amsterdam Sunday–Thursday each week. Compare: hotel (Bastion Hotel Amstel, citizenM East) vs short-stay apartment (Airbnb monthly, Spotahome) for a 6-week run.\n\nCover: weekly cost comparison, pros/cons for a doctor with early starts, which gives more comfort and flexibility.'},
+  {l:'AMC commute routes',t:'What is the best public transport from Wibautstraat / Amsterdam Oost to AMC hospital (Meibergdreef 9) in Amsterdam?\n\nGive: line numbers, journey time, frequency during 07:00–09:00, and nearest stop to AMC entrance. Also: any night bus for late shifts, and whether OV-fiets (rental bike) is a good option.'},
+  {l:'Weekly stay packing list',t:'I am a doctor doing weekly Sunday–Thursday hotel stays in Amsterdam while flat-hunting. Create a minimal but complete packing list. Cover: hospital work clothes, casual clothes, toiletries, practical items for hotel living, and tips to make weekly hotel stays less exhausting.'},
+];
+
+function initPrompts(){
+  document.getElementById('v-prompts').innerHTML=VP.map(p=>`<button class="btn btn-sm" onclick="openPM(${JSON.stringify(p.l)},${JSON.stringify(p.t)})">${p.l}</button>`).join('');
+  document.getElementById('h-prompts').innerHTML=HP.map(p=>`<button class="btn btn-sm" onclick="openPM(${JSON.stringify(p.l)},${JSON.stringify(p.t)})">${p.l}</button>`).join('');
+}
+
+// ── EXPORT ────────────────────────
+function exportData(){
+  const d={viewings,hotels,exported:new Date().toISOString(),app:'Mansa Amsterdam HQ v5'};
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='mansa-amsterdam-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(url);
+  toast('Exported ✓');
+}
+
+// ── INIT ──────────────────────────
+renderViewings();
+initPrompts();
+updateCounts();
+</script>
+</body>
+</html>
